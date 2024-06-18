@@ -10,9 +10,10 @@ from selenium.webdriver.common.actions.wheel_input import ScrollOrigin
 options = webdriver.ChromeOptions()
 options.add_experimental_option("excludeSwitches", ["enable-logging"])
 
-driver = webdriver.Chrome()
+driver = webdriver.Chrome(options=options)
 includedTypes = ["real estate agent", "real estate agency", "insurance_agency", "lawyer", "car_dealer", "car_rental", "car_repair", "car_wash", "art_gallery", "museum", "performing_arts_theater", "library", "amusement_center", "amusement_park", "aquarium", "banquet_hall", "bowling_alley", "casino", "event_venue", "night_club", "wedding_venue", "accounting", "dental_clinic", "dentist", "doctor", "hospital", "physiotherapist", "spa", "extended_stay_hotel", "hotel", "resort_hotel", "beauty_salon", "child_care_agency", "consultant", "electrician", "florist", "funeral_home", "hair_care", "hair_salon", "locksmith", "moving_company", "plumber", "roofing_contractor", "veterinary_care", "auto_parts_store", "electronics_store", "home_improvement_store", "jewelry_store", "fitness_center", "gym", "ski_resort", "sports_club", "sports_complex"]
-addressl = "13672 Beach Blvd, Jacksonville, FL 32224"
+addressl = "10863 West Bloomingdale Avenue, Riverview, FL  33578" # Address
+sheet = "TAM2002-D01" # Google Sheets Sheets Name
 locations = []
 
 for term in includedTypes:
@@ -62,9 +63,12 @@ for term in includedTypes:
 
 driver.close()
 
+with open("fail_safe.csv", "w+") as f:
+    f.write("\n".join([",".join(l) for l in locations]))
+    f.close()
+
 gsm = google_sheets_access.GoogleManager()
-id = "1fym26_g9Cr4pxIV41JVWrbDX4cQXcyTTJGwCrVBGlRo"
-sheet = "JAX3003-D01/D02/D03/D04"
+id = "" # Google Sheets Webpage ID https://docs.google.com/spreadsheets/d/[HERE]/edit, do not leave it blank 
 
 gsm.update(
     id,
